@@ -1,3 +1,6 @@
 Rails.application.routes.draw do
-  root 'pages#home'
+  get 'scales/home'
+  post 'scales/pitches'
+  post 'scales/name'
+  root 'scales#home'
 end
