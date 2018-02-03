@@ -1,15 +1,13 @@
-
-<%= form_tag(controller: "scales", action:"pitches", method: "post") do %>
-  <%= label_tag(:key, "Key:") %>
-  <%= text_field_tag(:key) %>
-  <%= label_tag(:scale, "Scale:") %>
-  <%= text_field_tag(:scale) %>
-  <%= label_tag(:pattern, "Pattern:") %>
-  <%= text_field_tag(:pattern) %>
-  <%= submit_tag("Find Scale") %>
-<% end %>
-
-<%= "#{@key} #{@scale} #{@pattern}" %><br />
-<%= "#{@scale_flat} #{@scale_sharp}" %><br />
-
-<%= link_to 'Home', root_path %>
+<div class="container-fluid">
+  <div id='scales-form'>
+    <%= render 'scales/form' %>
+  </div><br />
+  <%= ("KEY: #{@key}") if @scale_flat || @scale_sharp %><br />
+  <%= ("SCALE: #{@scale.capitalize}") if @scale_flat || @scale_sharp %><br />
+  <%= ("NOTES: #{@scale_flat.join(" ")}") if @scale_flat %>
+  <%= (@scale_sharp.join (" ")) if @scale_sharp %>
+  <br /><br />
+  <div class="row">
+    <div class="col-md-3"><%= link_to 'Home', root_path %></div>
+  </div>
+</div>

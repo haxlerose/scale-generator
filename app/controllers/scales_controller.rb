@@ -9,7 +9,7 @@ class ScalesController < ApplicationController
     @pattern = params[:pattern]
 
     load_keys
-
+    (find_pattern) if @scale != "chromatic"
     (find_accidentals) if @scale != "chromatic"
 
     @sharp_key ? load_sharps : load_flats
@@ -125,6 +125,21 @@ class ScalesController < ApplicationController
     @octatonic_sharp_keys = ["C", "D#", "F#", "A"]
   end
 
+  def find_pattern
+    @pattern = "MMmMMMm" if @scale == "major"
+    @pattern = "MmMMmMM" if @scale == "minor"
+    @pattern = "MmMMMmM" if @scale == "dorian"
+    @pattern = "MMmMMmM" if @scale == "mixolydian"
+    @pattern = "MMMmMMm" if @scale == "lydian"
+    @pattern = "mMMMmMM" if @scale == "phrygian"
+    @pattern = "mMMmMMM" if @scale == "locrian"
+    @pattern = "MmMMmAm" if @scale == "harmonic_minor"
+    @pattern = "MmMmMmMm" if @scale == "octatonic"
+    @pattern = "MMMMMM" if @scale == "hexatonic"
+    @pattern = "MMAMA" if @scale == "pentatonic"
+    @pattern = "mAMMMmM" if @scale == "enigma"
+  end
+
   def find_accidentals
   (@pattern_array = @pattern.scan /\w/) if @scale != "chromatic"
 
@@ -151,11 +166,11 @@ class ScalesController < ApplicationController
   end
 
   # finds if the scale uses sharps or flats
-  if @third == 3 && @minor_flat_keys.include?(@key) && @scale != :octatonic
+  if @third == 3 && @minor_flat_keys.include?(@key) && @scale != "octatonic"
     @sharp_key = false
-  elsif @third == 4 && @chromatic_flat_keys.include?(@key) && @scale != :octatonic
+  elsif @third == 4 && @chromatic_flat_keys.include?(@key) && @scale != "octatonic"
     @sharp_key = false
-  elsif @octatonic_sharp_keys.include?(@key) && @scale == :octatonic
+  elsif @octatonic_sharp_keys.include?(@key) && @scale == "octatonic"
     @sharp_key = true
   else
     @sharp_key = true
@@ -173,16 +188,5 @@ def load_flats
   @key_pos_flat = @all_flat_notes.find_index(@key)
   @scale_flat = [@key]
 end
-
-
-  def name
-    @key = params[:key].capitalize
-    @scale = params[:scale]
-
-    render "home"
-  end
-
-
-
 
 end
