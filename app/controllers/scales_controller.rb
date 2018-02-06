@@ -6,7 +6,6 @@ class ScalesController < ApplicationController
   def pitches
     @key = params[:key].capitalize
     @scale = params[:scale]
-    @pattern = params[:pattern]
 
     load_keys
     (find_pattern) if @scale != "chromatic"
@@ -113,16 +112,15 @@ class ScalesController < ApplicationController
       end
       #render @scale_flat
     end
-
     render "home"
   end
 
   def load_keys
-    @chromatic_sharp_keys = ["C", "G", "D", "A", "E", "B", "F#", "C#", "G#"]
-    @chromatic_flat_keys = ["F", "Bb", "Eb", "Ab", "Db", "Gb"]
-    @minor_sharp_keys = ["A", "E", "F#", "C#", "G#", "D#", "A#"]
-    @minor_flat_keys = ["D", "G", "C", "F", "Bb", "Eb"]
-    @octatonic_sharp_keys = ["C", "D#", "F#", "A"]
+    @chromatic_sharp_keys = ["A", "B", "C", "C#", "D", "E", "F#", "G", "G#"]
+    @chromatic_flat_keys = ["Ab", "Bb", "Db", "Eb", "F", "Gb"]
+    @minor_sharp_keys = ["A", "B", "C#", "E", "F#", "G#"]
+    @minor_flat_keys = ["Ab", "Bb", "C", "Db", "D", "Eb", "F", "G", "Gb"]
+    @octatonic_flat_keys = ["Ab", "Bb", "Db", "Eb", "F", "Gb"]
   end
 
   def find_pattern
@@ -136,7 +134,8 @@ class ScalesController < ApplicationController
     @pattern = "MmMMmAm" if @scale == "harmonic_minor"
     @pattern = "MmMmMmMm" if @scale == "octatonic"
     @pattern = "MMMMMM" if @scale == "hexatonic"
-    @pattern = "MMAMA" if @scale == "pentatonic"
+    @pattern = "MMAMA" if @scale == "major_pentatonic"
+    @pattern = "AMMAM" if @scale == "minor_pentatonic"
     @pattern = "mAMMMmM" if @scale == "enigma"
   end
 
@@ -170,8 +169,8 @@ class ScalesController < ApplicationController
     @sharp_key = false
   elsif @third == 4 && @chromatic_flat_keys.include?(@key) && @scale != "octatonic"
     @sharp_key = false
-  elsif @octatonic_sharp_keys.include?(@key) && @scale == "octatonic"
-    @sharp_key = true
+  elsif @scale != "octatonic" && @octatonic_flat_keys.include?(@key)
+    @sharp_key = false
   else
     @sharp_key = true
   end
