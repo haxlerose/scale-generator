@@ -1,9 +1,13 @@
 <%= form_tag(controller: "scales", action:"pitches", method: "post", remote: true) do %>
-  Key: <%= select_tag(:key, options_for_select([['Ab', "Ab"], ['A', "A"], ['Bb', "Bb"],
+  <div class="row">
+    <div class="col-sm-2">
+      Key: <%= select_tag(:key, options_for_select([['Ab', "Ab"], ['A', "A"], ['Bb', "Bb"],
                                            ['B', "B"], ['C', "C"], ['C#', "C#"], ['Db', "Db"],
                                            ['D', "D"], ['Eb', "Eb"], ['E', "E"], ['F', "F"],
                                            ['F#', "F#"], ['Gb', "Gb"], ['G', "G"], ['G#', "G#"]])) %>
-  Scale: <%= select_tag(:scale, options_for_select([['Chromatic', "chromatic"],
+    </div>
+    <div class="col-sm-3">
+      Scale: <%= select_tag(:scale, options_for_select([['Chromatic', "chromatic"],
                          ['Major', "major"], ['Minor', "minor"],
                          ['Harmonic Minor', "harmonic_minor"], ['Dorian', "dorian"],
                          ['Phrygian', "phrygian"], ['Lydian', "lydian"],
@@ -11,5 +15,9 @@
                          ['Octatonic', "octatonic"], ['Major Pentatonic', "major_pentatonic"],
                          ['Minor Pentatonic', "minor_pentatonic"], ['Hexatonic', "hexatonic"],
                          ['Enigma', "enigma"]])) %>
-  <%= submit_tag("Find Scale") %>
+    </div>
+    <div class="col-sm-1">
+      <%= submit_tag("Find Scale") %>
+    </div>
+  </div>
 <% end %>

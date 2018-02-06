@@ -1,15 +1,23 @@
 <div class="container-fluid">
-  <div id='scales-form' class="row">
+  <div id='scales-form'>
     <%= render 'scales/form' %>
   </div><br />
   <div class="row">
-  <%= ("KEY: #{@key}") if @scale_flat || @scale_sharp %><br />
-  <%= ("SCALE: #{@scale.capitalize}") if @scale_flat || @scale_sharp %><br />
-  <%= ("NOTES: #{@scale_flat.join(" ")}") if @scale_flat %>
-  <%= (@scale_sharp.join (" ")) if @scale_sharp %>
+    <div class="col-sm-2">
+      <%= ("KEY:") if @sharp_key != nil %>
+      <%= ("#{@key}") if @sharp_key != nil %>
+    </div>
+    <div class="col-sm-3">
+      <%= ("SCALE: #{@scale}") if @sharp_key != nil %>
+    </div>
+    <div class="col-sm-4">
+      <%= ("NOTES: #{@scale_build.join(" ")}") if @sharp_key != nil %>
+    </div>
   </div>
   <br />
   <div class="row">
-    <%= link_to 'Home', root_path %></div>
+    <div class="col-sm-2">
+      <%= link_to 'Home', root_path %>
+    </div>
   </div>
 </div>
